@@ -1,0 +1,5 @@
+-keep class com.mmids.** { *; }
+-keep class com.mmids.receivers.** { *; }
+-keep class com.mmids.admin.** { *; }
+-keep class com.mmids.services.** { *; }
+-dontwarn kotlin.**

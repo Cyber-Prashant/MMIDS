@@ -151,8 +151,12 @@
         </receiver>
 
         <receiver android:name=".receivers.DialerReceiver" android:exported="true">
-            <intent-filter>
+            <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SECRET_CODE" />
+                <data android:scheme="android_secret_code" android:host="66437" />
             </intent-filter>
         </receiver>
 

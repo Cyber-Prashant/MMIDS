@@ -2,6 +2,8 @@ package com.mmids.ui.screens
 
 import android.content.Context
 import android.content.Intent
+import android.app.usage.UsageStatsManager
+import android.provider.Settings
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
@@ -17,9 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import com.mmids.MainActivity
 import com.mmids.services.MonitoringService
 import com.mmids.ui.components.*
@@ -33,13 +38,33 @@ fun DashboardScreen(
     activity: MainActivity
 ) {
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     var isMonitoring by remember { mutableStateOf(MonitoringService.isMonitoring) }
     var hasLogs by remember { mutableStateOf(false) }
     var showClearDialog by remember { mutableStateOf(false) }
+    var hasUsagePermission by remember { mutableStateOf(true) }
+    var hasOverlayPermission by remember { mutableStateOf(true) }
 
-    // Check logs on load
-    LaunchedEffect(Unit) {
+    // Check logs and permissions
+    fun refreshStatus() {
         hasLogs = logFileHasContent(context)
+        hasUsagePermission = checkUsagePermission(context)
+        hasOverlayPermission = checkOverlayPermission(context)
+        isMonitoring = MonitoringService.isMonitoring
+    }
+
+    LaunchedEffect(Unit) {
+        refreshStatus()
+    }
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                refreshStatus()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
 
     // Animated card color
@@ -50,11 +75,14 @@ fun DashboardScreen(
 
     fun toggleMonitoring() {
         val action = if (isMonitoring) "STOP" else "START"
-        context.startForegroundService(
-            Intent(context, MonitoringService::class.java).apply { this.action = action }
-        )
+        val intent = Intent(activity, MonitoringService::class.java).apply { this.action = action }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            activity.startForegroundService(intent)
+        } else {
+            activity.startService(intent)
+        }
         isMonitoring = !isMonitoring
-        if (!isMonitoring) hasLogs = logFileHasContent(context)
+        if (!isMonitoring) hasLogs = logFileHasContent(activity)
     }
 
     Scaffold(
@@ -86,6 +114,32 @@ fun DashboardScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Spacer(Modifier.height(4.dp))
+
+            // ── Permission Warnings ──────────────────────────────
+            if (!hasUsagePermission) {
+                PermissionWarningCard(
+                    title = "Usage Access Required",
+                    description = "Needed to track which apps an intruder opens.",
+                    onGrant = {
+                        activity.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).apply {
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        })
+                    }
+                )
+            }
+
+            if (!hasOverlayPermission) {
+                PermissionWarningCard(
+                    title = "Overlay Permission Required",
+                    description = "Needed to show intruder alerts over other apps.",
+                    onGrant = {
+                        activity.startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).apply {
+                            data = android.net.Uri.parse("package:${activity.packageName}")
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        })
+                    }
+                )
+            }
 
             // ── Status Card ──────────────────────────────────────
             MMIDSCard(tint = cardColor) {
@@ -229,4 +283,42 @@ fun clearLogs(context: Context) {
         java.io.File(java.io.File(context.filesDir, ".mmids_logs"), "session_log.txt")
             .writeText("")
     } catch (_: Exception) {}
+}
+
+@Composable
+fun PermissionWarningCard(title: String, description: String, onGrant: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(Red.copy(0.1f))
+            .border(1.dp, Red.copy(0.3f), RoundedCornerShape(12.dp))
+            .padding(14.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(title, color = Red, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+            Text(description, color = TextSecondary, fontSize = 12.sp)
+        }
+        Button(
+            onClick = onGrant,
+            colors = ButtonDefaults.buttonColors(containerColor = Red),
+            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+            modifier = Modifier.height(32.dp),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Text("Grant", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+        }
+    }
+}
+
+fun checkUsagePermission(context: Context): Boolean {
+    val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+    val now = System.currentTimeMillis()
+    val stats = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, now - 60000, now)
+    return stats != null && stats.isNotEmpty()
+}
+
+fun checkOverlayPermission(context: Context): Boolean {
+    return Settings.canDrawOverlays(context)
 }

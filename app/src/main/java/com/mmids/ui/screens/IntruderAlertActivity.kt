@@ -1,6 +1,5 @@
 package com.mmids.ui.screens
 
-import android.app.Activity
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Context
@@ -16,7 +15,6 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -27,6 +25,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -48,12 +48,19 @@ class IntruderAlertActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // Ensure activity appears over lock screen
         window.addFlags(
             WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
             WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
             WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or
-            WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+            WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON or
+            WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON
         )
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true)
+            setTurnScreenOn(true)
+        }
 
         val mode = intent.getStringExtra("mode") ?: "PROMPT"
         if (mode == "DETERRENCE") playShutterSound()
@@ -64,8 +71,8 @@ class IntruderAlertActivity : ComponentActivity() {
                 when (mode) {
                     "DETERRENCE" -> DeterrenceScreen(onFinish = { finish() })
                     else -> IntruderPromptScreen(
-                        onOkDown = { startHold() },
-                        onOkUp   = { endHold() },
+                        onOkPress = { startHold() },
+                        onOkRelease = { elapsed -> endHold(elapsed) },
                         onCancel = { lockAndExit() }
                     )
                 }
@@ -74,6 +81,7 @@ class IntruderAlertActivity : ComponentActivity() {
     }
 
     private fun startHold() {
+        authorized = false
         holdHandler = Handler(Looper.getMainLooper())
         holdRunnable = Runnable {
             authorized = true
@@ -82,7 +90,7 @@ class IntruderAlertActivity : ComponentActivity() {
         holdHandler?.postDelayed(holdRunnable!!, LONG_PRESS_MS)
     }
 
-    private fun endHold() {
+    private fun endHold(elapsed: Long) {
         val wasAuthorized = authorized
         holdHandler?.removeCallbacks(holdRunnable!!)
         if (!wasAuthorized) {
@@ -101,17 +109,16 @@ class IntruderAlertActivity : ComponentActivity() {
     }
 
     private fun onAuthorized() {
-        if (MonitoringService.isMonitoring) {
-            startForegroundService(
-                Intent(this, MonitoringService::class.java).apply { action = "STOP" }
-            )
-        }
+        // Owner authorized - stop monitoring if active
+        startForegroundService(
+            Intent(this, MonitoringService::class.java).apply { action = "STOP" }
+        )
         setContent {
             MMIDSTheme {
                 AuthorizedScreen(
                     onViewLogs = {
                         startActivity(Intent(this, MainActivity::class.java).apply {
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         })
                         finish()
                     },
@@ -146,21 +153,17 @@ class IntruderAlertActivity : ComponentActivity() {
             player?.setOnCompletionListener { it.release() }
         } catch (_: Exception) {}
     }
-
-    // Removing overridden onBackPressed to fix warning and using BackHandler instead
 }
 
-// ── Intruder Prompt — Clean, no hints, no progress bar ───────────
 @Composable
 fun IntruderPromptScreen(
-    onOkDown: () -> Unit,
-    onOkUp: () -> Unit,
+    onOkPress: () -> Unit,
+    onOkRelease: (Long) -> Unit,
     onCancel: () -> Unit
 ) {
-    // White flash effect on first composition
     var showFlash by remember { mutableStateOf(true) }
     LaunchedEffect(Unit) {
-        kotlinx.coroutines.delay(180)
+        kotlinx.coroutines.delay(200) // Slightly longer flash
         showFlash = false
     }
 
@@ -178,11 +181,9 @@ fun IntruderPromptScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                // Warning icon
                 Icon(Icons.Filled.Warning, contentDescription = null,
                     tint = Red, modifier = Modifier.size(52.dp))
 
-                // Alert card
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -207,12 +208,10 @@ fun IntruderPromptScreen(
                         lineHeight = 20.sp
                     )
 
-                    // Buttons — NO hint text, NO progress bar below
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        // Cancel — locks screen
                         OutlinedButton(
                             onClick = onCancel,
                             modifier = Modifier.weight(1f),
@@ -223,37 +222,42 @@ fun IntruderPromptScreen(
                             shape = RoundedCornerShape(8.dp)
                         ) { Text("Cancel") }
 
-                        // OK — silent long press (5s = owner auth)
-                        // No hint, no timer bar — completely invisible to intruder
                         Box(
                             modifier = Modifier
                                 .weight(1f)
-                                .height(40.dp)
+                                .height(44.dp)
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(Red.copy(0.85f))
                                 .pointerInput(Unit) {
-                                    detectTapGestures(
-                                        onPress = {
-                                            onOkDown()
-                                            tryAwaitRelease()
-                                            onOkUp()
+                                    awaitPointerEventScope {
+                                        while (true) {
+                                            val down = awaitPointerEvent(PointerEventPass.Main)
+                                            if (down.type == PointerEventType.Press) {
+                                                val pressTime = System.currentTimeMillis()
+                                                onOkPress()
+                                                while (true) {
+                                                    val up = awaitPointerEvent(PointerEventPass.Main)
+                                                    if (up.type == PointerEventType.Release) {
+                                                        val elapsed = System.currentTimeMillis() - pressTime
+                                                        onOkRelease(elapsed)
+                                                        break
+                                                    }
+                                                }
+                                            }
                                         }
-                                    )
+                                    }
                                 },
                             contentAlignment = Alignment.Center
                         ) {
                             Text("OK", color = Color.White, fontWeight = FontWeight.Bold)
                         }
                     }
-                    // ✅ No progress bar here
-                    // ✅ No hint text here
                 }
             }
         }
     }
 }
 
-// ── Deterrence Screen ─────────────────────────────────────────────
 @Composable
 fun DeterrenceScreen(onFinish: () -> Unit) {
     val steps = listOf(
@@ -265,8 +269,6 @@ fun DeterrenceScreen(onFinish: () -> Unit) {
         "📋 Report ID: ${System.currentTimeMillis()}"
     )
     var visibleSteps by remember { mutableStateOf(0) }
-
-    // White flash then show sequence
     var showFlash by remember { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
@@ -341,7 +343,6 @@ fun DeterrenceScreen(onFinish: () -> Unit) {
     }
 }
 
-// ── Owner Authorized Screen ───────────────────────────────────────
 @Composable
 fun AuthorizedScreen(onViewLogs: () -> Unit, onProceed: () -> Unit) {
     Box(

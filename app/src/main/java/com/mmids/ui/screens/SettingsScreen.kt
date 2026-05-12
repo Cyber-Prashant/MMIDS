@@ -32,6 +32,7 @@ import com.mmids.ui.theme.*
 data class IconOption(val emoji: String, val label: String, val aliasName: String)
 
 val ICON_OPTIONS = listOf(
+    IconOption("🛡️", "MMID Default", "com.mmids.AliasSettings"), // Using AliasSettings as default for now
     IconOption("⚙️", "System Settings", "com.mmids.AliasSettings"),
     IconOption("📡", "Signal Monitor",  "com.mmids.AliasSignal"),
     IconOption("🔧", "Device Tools",    "com.mmids.AliasTool"),
@@ -76,11 +77,14 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
 
     fun applyIconAlias(index: Int) {
         val pm = context.packageManager
-        ICON_OPTIONS.forEachIndexed { i, opt ->
+        // If it's the "Default" option (index 0), we still need to enable one alias because MainActivity doesn't have a launcher intent
+        val targetAlias = ICON_OPTIONS[index].aliasName
+        
+        ICON_OPTIONS.drop(1).forEach { opt ->
             try {
                 pm.setComponentEnabledSetting(
                     ComponentName(context, opt.aliasName),
-                    if (i == index) PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+                    if (opt.aliasName == targetAlias) PackageManager.COMPONENT_ENABLED_STATE_ENABLED
                     else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                     PackageManager.DONT_KILL_APP
                 )
@@ -118,13 +122,14 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Spacer(Modifier.height(4.dp))
 
+            // ── App Name ──────────────────────────────────────────
             SectionLabel("🎭 APP DISGUISE — NAME")
             MMIDSCard {
-                Text("Displayed in notifications and device settings",
+                Text("Display name shown in notifications and device settings",
                     color = TextSecondary, fontSize = 12.sp)
                 Spacer(Modifier.height(10.dp))
                 OutlinedTextField(
@@ -150,7 +155,7 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
                 )
                 Spacer(Modifier.height(10.dp))
                 MMIDSButton(
-                    label = if (showNameSaved) "✓ Saved!" else "Save Name",
+                    label = if (showNameSaved) "✓ Save Name" else "Save Name",
                     icon = Icons.Outlined.Save,
                     color = Green,
                     bgColor = Green.copy(0.15f),
@@ -159,23 +164,19 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
                         val name = appName.trim().ifEmpty { "MMID" }
                         prefs.edit().putString("disguise_app_name", name).apply()
                         showNameSaved = true
-                        // Trigger notification update in service
                         val intent = Intent(context, com.mmids.services.MonitoringService::class.java).apply {
                             action = "UPDATE_NOTIF"
                         }
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                            context.startForegroundService(intent)
-                        } else {
-                            context.startService(intent)
-                        }
+                        context.startForegroundService(intent)
                     }
                 )
             }
 
+            // ── App Icon ──────────────────────────────────────────
             SectionLabel("🎭 APP DISGUISE — ICON")
             MMIDSCard {
-                Text("Choose a preset disguise icon", color = TextSecondary, fontSize = 12.sp)
-                Spacer(Modifier.height(12.dp))
+                Text("Choose a preset disguise or pick a custom image", color = TextSecondary, fontSize = 12.sp)
+                Spacer(Modifier.height(16.dp))
 
                 val rows = ICON_OPTIONS.chunked(4)
                 rows.forEach { row ->
@@ -183,7 +184,7 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
                         horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         row.forEach { opt ->
                             val idx = ICON_OPTIONS.indexOf(opt)
-                            val isSel = idx == selectedIcon
+                            val isSel = idx == selectedIcon && customIconName == null
                             Box(
                                 modifier = Modifier
                                     .weight(1f)
@@ -195,7 +196,7 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
                                         if (isSel) Green else Color.White.copy(0.07f),
                                         RoundedCornerShape(12.dp)
                                     )
-                                    .clickable { applyIconAlias(idx) },
+                                    .clickable { applyIconAlias(idx); customIconName = null },
                                 contentAlignment = Alignment.Center
                             ) {
                                 Column(horizontalAlignment = Alignment.CenterHorizontally,
@@ -213,10 +214,48 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
                     }
                     Spacer(Modifier.height(8.dp))
                 }
-                InfoBox("⚠️ After changing icon, relaunch the app to see effects.",
+
+                Spacer(Modifier.height(8.dp))
+                Divider(color = BgDivider)
+                Spacer(Modifier.height(12.dp))
+
+                Text("Custom Icon from File Manager", color = Color.White.copy(0.7f), fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+                Spacer(Modifier.height(10.dp))
+                Row(modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(if (customIconName != null) Green.copy(0.12f) else BgElevated)
+                            .border(1.dp, if (customIconName != null) Green.copy(0.4f) else Color.White.copy(0.08f), RoundedCornerShape(10.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(if (customIconName != null) Icons.Filled.Image else Icons.Outlined.AddPhotoAlternate,
+                            contentDescription = null, tint = if (customIconName != null) Green else TextSecondary,
+                            modifier = Modifier.size(24.dp))
+                    }
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(customIconName ?: "No custom icon selected", color = if (customIconName != null) Color.White else TextSecondary,
+                            fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text("PNG or JPG, min 192x192px", color = TextDim, fontSize = 10.sp)
+                    }
+                    OutlinedButton(
+                        onClick = { activity.pickImage() },
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = Blue),
+                        border = BorderStroke(1.dp, Blue.copy(0.3f)),
+                        modifier = Modifier.height(32.dp),
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp)
+                    ) { Text("Browse", fontSize = 12.sp) }
+                }
+
+                Spacer(Modifier.height(12.dp))
+                InfoBox("⚠️ After changing icon, relaunch the app. Custom icon is stored in hidden internal storage.",
                     Orange, Icons.Outlined.Info)
             }
 
+            // ── Alert Sound ───────────────────────────────────────
             SectionLabel("🔊 ALERT SOUND")
             MMIDSCard {
                 Row(modifier = Modifier.fillMaxWidth(),
@@ -242,52 +281,25 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
                         Text("Change", color = Blue, fontSize = 13.sp)
                     }
                 }
-                if (!shutterSoundName.contains("Default")) {
-                    Spacer(Modifier.height(4.dp))
-                    Row(modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End) {
-                        TextButton(onClick = {
-                            prefs.edit().remove("shutter_sound_path").apply()
-                            shutterSoundName = "freesound_community-camera-shutter (Default)"
-                        }) {
-                            Text("Reset to default", color = TextSecondary, fontSize = 11.sp)
-                        }
-                    }
-                }
+                Spacer(Modifier.height(10.dp))
+                InfoBox("🔒 Custom sound stored as hidden file — invisible in file manager",
+                    Blue, Icons.Outlined.Lock)
             }
 
+            // ── Security ──────────────────────────────────────────
             SectionLabel("🔒 SECURITY")
             MMIDSCard {
                 ToggleRow(
-                    title = "Auto-start on Boot",
-                    subtitle = "Launch MMID automatically when the phone boots",
+                    title = "Start on Boot",
+                    subtitle = "Auto-launch monitoring after device restart",
                     checked = autoStartEnabled,
                     onToggle = {
                         autoStartEnabled = !autoStartEnabled
                         prefs.edit().putBoolean("auto_start_boot", autoStartEnabled).apply()
                     }
                 )
-                Divider(color = BgDivider, modifier = Modifier.padding(vertical = 8.dp))
-                ToggleRow(
-                    title = "Lock Screen Trigger",
-                    subtitle = "Use volume buttons to toggle monitoring while screen is locked",
-                    checked = lockTriggerEnabled,
-                    onToggle = {
-                        lockTriggerEnabled = !lockTriggerEnabled
-                        prefs.edit().putBoolean("lock_trigger", lockTriggerEnabled).apply()
-                    }
-                )
-
-                Spacer(Modifier.height(10.dp))
-                InfoBox(
-                    text = "When screen is locked, use physical volume buttons to toggle monitoring. " +
-                        "Volume UP = ON, Volume DOWN = OFF.",
-                    color = Orange,
-                    icon = Icons.Outlined.VolumeUp
-                )
-
-                Divider(color = BgDivider, modifier = Modifier.padding(vertical = 10.dp))
-
+                Divider(color = BgDivider, modifier = Modifier.padding(vertical = 12.dp))
+                
                 SecurityRow(
                     icon = Icons.Outlined.AdminPanelSettings,
                     color = Orange,
@@ -305,16 +317,55 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
                             },
                             colors = ButtonDefaults.outlinedButtonColors(contentColor = Orange),
                             border = BorderStroke(1.dp, Orange.copy(0.4f)),
-                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
-                            modifier = Modifier.height(30.dp)
+                            modifier = Modifier.height(30.dp),
+                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp)
                         ) { Text("Enable", fontSize = 11.sp) }
                     }
                 }
+
+                Divider(color = BgDivider, modifier = Modifier.padding(vertical = 12.dp))
+
+                StatusRow(Icons.Outlined.VisibilityOff, Purple, "Hidden from Launcher", "No icon visible")
+                StatusRow(Icons.Outlined.FolderOff, Teal, "Logs Hidden", ".nomedia — invisible")
+                StatusRow(Icons.Outlined.PowerOff, Color(0xFF607D8B), "Auto-Save on Shutdown", "Session preserved on power off")
+                StatusRow(Icons.Outlined.VolumeUp, Blue, "Lock Screen Trigger", "Physical Volume buttons only")
+
+                Spacer(Modifier.height(12.dp))
+                InfoBox(
+                    text = "When the screen is locked, only the device's physical Volume buttons will trigger capture. Volume controls from Bluetooth audio devices are intentionally ignored for security.",
+                    color = Blue,
+                    icon = Icons.Outlined.Info
+                )
             }
 
+            // ── Legal ─────────────────────────────────────────────
+            SectionLabel("⚖️ LEGAL")
+            MMIDSCard {
+                LegalExpandable(
+                    icon = Icons.Outlined.Gavel,
+                    title = "Terms & Conditions",
+                    subtitle = "Last Updated: April 2024",
+                    expanded = termsExpanded,
+                    onToggle = { termsExpanded = !termsExpanded }
+                ) {
+                    LegalText("Terms & Conditions text goes here...")
+                }
+                Divider(color = BgDivider, modifier = Modifier.padding(vertical = 4.dp))
+                LegalExpandable(
+                    icon = Icons.Outlined.PrivacyTip,
+                    title = "Privacy Policy",
+                    subtitle = "Last Updated: April 2024",
+                    expanded = privacyExpanded,
+                    onToggle = { privacyExpanded = !privacyExpanded }
+                ) {
+                    LegalText("Privacy Policy text goes here...")
+                }
+            }
+
+            // ── Danger Zone ───────────────────────────────────────
             SectionLabel("⚠️ DANGER ZONE")
             MMIDSButton(
-                label = "Uninstall MMID",
+                label = "Uninstall MMIDS",
                 icon = Icons.Outlined.DeleteForever,
                 color = Color(0xFFEF9A9A),
                 bgColor = Color(0xFF2A0A0A),
@@ -346,4 +397,96 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
             }
         )
     }
+}
+
+@Composable
+fun StatusRow(icon: ImageVector, color: Color, title: String, subtitle: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .size(32.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .background(color.copy(alpha = 0.12f)),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(icon, contentDescription = null, tint = color, modifier = Modifier.size(16.dp))
+        }
+        Column(modifier = Modifier.weight(1f)) {
+            Text(title, color = TextPrimary, fontSize = 13.sp)
+            Text(subtitle, color = TextSecondary, fontSize = 11.sp)
+        }
+        Icon(Icons.Filled.CheckCircle, contentDescription = null, tint = Green, modifier = Modifier.size(20.dp))
+    }
+}
+
+@Composable
+fun LegalExpandable(
+    icon: ImageVector,
+    title: String,
+    subtitle: String,
+    expanded: Boolean,
+    onToggle: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onToggle)
+                .padding(vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(32.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Blue.copy(alpha = 0.12f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(icon, contentDescription = null, tint = Blue, modifier = Modifier.size(18.dp))
+            }
+            Column(modifier = Modifier.weight(1f)) {
+                Text(title, color = TextPrimary, fontSize = 14.sp, fontWeight = FontWeight.Medium)
+                Text(subtitle, color = TextSecondary, fontSize = 11.sp)
+            }
+            Icon(
+                if (expanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+                contentDescription = null, tint = TextSecondary, modifier = Modifier.size(20.dp)
+            )
+        }
+        AnimatedVisibility(visible = expanded,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically()) {
+            content()
+        }
+    }
+}
+
+@Composable
+fun LegalText(text: String) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(max = 220.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(BgElevated)
+            .padding(12.dp)
+    ) {
+        val scroll = rememberScrollState()
+        Text(
+            text = text,
+            color = TextSecondary,
+            fontSize = 11.sp,
+            lineHeight = 17.sp,
+            modifier = Modifier.verticalScroll(scroll)
+        )
+    }
+    Spacer(Modifier.height(8.dp))
 }

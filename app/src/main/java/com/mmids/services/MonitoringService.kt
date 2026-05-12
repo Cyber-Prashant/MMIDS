@@ -13,6 +13,7 @@ import android.provider.Settings
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.mmids.receivers.UnlockReceiver
+import com.mmids.ui.screens.IntruderAlertActivity
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,6 +25,7 @@ class MonitoringService : Service() {
         const val CHANNEL_ID       = "mmids_service"
         const val ALERT_CHANNEL_ID = "mmids_alerts"
         const val NOTIF_ID         = 1001
+        const val INTRUDER_NOTIF_ID = 1002
         const val TAG              = "MMIDS"
     }
 
@@ -34,16 +36,22 @@ class MonitoringService : Service() {
     private val volumeObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
         override fun onChange(selfChange: Boolean) {
             val km = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
-            if (!km.isKeyguardLocked) return
+            if (!km.isKeyguardLocked) {
+                Log.d(TAG, "Volume changed but screen not locked - ignoring")
+                return
+            }
 
             val prefs = getSharedPreferences("mmids_prefs", MODE_PRIVATE)
             if (!prefs.getBoolean("lock_trigger", true)) return
 
             val am = getSystemService(AUDIO_SERVICE) as AudioManager
-            // Check both RING and MUSIC streams as different devices use different ones for physical buttons
-            val ringVol = am.getStreamVolume(AudioManager.STREAM_RING)
-            val musicVol = am.getStreamVolume(AudioManager.STREAM_MUSIC)
-            val vol = ringVol + musicVol
+            // Check Ring, Music and Notification streams
+            val ring = am.getStreamVolume(AudioManager.STREAM_RING)
+            val music = am.getStreamVolume(AudioManager.STREAM_MUSIC)
+            val notif = am.getStreamVolume(AudioManager.STREAM_NOTIFICATION)
+            val vol = ring + music + notif
+
+            Log.d(TAG, "Volume Change detected: Ring=$ring, Music=$music, Total=$vol (Last=$lastVolume)")
 
             if (lastVolume == -1) {
                 lastVolume = vol
@@ -67,22 +75,22 @@ class MonitoringService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        Log.d(TAG, "MonitoringService onCreate")
         startForeground(NOTIF_ID, buildNotification("Standby"))
 
-        // Register ContentObserver for volume changes
+        // Register ContentObserver for volume changes on the system settings URI
         contentResolver.registerContentObserver(
             Settings.System.CONTENT_URI, true, volumeObserver
         )
 
         // Register UnlockReceiver dynamically
-        val filter = IntentFilter(Intent.ACTION_USER_PRESENT).apply {
-            priority = 1000
-        }
+        val filter = IntentFilter(Intent.ACTION_USER_PRESENT).apply { priority = 1000 }
         registerReceiver(unlockReceiver, filter)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val prefs = getSharedPreferences("mmids_prefs", MODE_PRIVATE)
+        Log.d(TAG, "onStartCommand: action=${intent?.action}")
         
         if (intent != null) {
             when (intent.action) {
@@ -104,6 +112,10 @@ class MonitoringService : Service() {
                 "UPDATE_NOTIF" -> {
                     updateNotification(if (isMonitoring) "Active 🟢" else "Standby")
                 }
+                "LAUNCH_INTRUDER" -> {
+                    val mode = intent.getStringExtra("mode") ?: "PROMPT"
+                    launchIntruderActivity(mode)
+                }
             }
         } else {
             // Service restarted by system
@@ -116,12 +128,49 @@ class MonitoringService : Service() {
         return START_STICKY
     }
 
+    private fun launchIntruderActivity(mode: String) {
+        Log.d(TAG, "Launching IntruderActivity with mode: $mode")
+        
+        val intent = Intent(this, IntruderAlertActivity::class.java).apply {
+            putExtra("mode", mode)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or 
+                     Intent.FLAG_ACTIVITY_CLEAR_TOP or 
+                     Intent.FLAG_ACTIVITY_SINGLE_TOP or
+                     Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+        }
+        
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, 
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val notification = NotificationCompat.Builder(this, ALERT_CHANNEL_ID)
+            .setSmallIcon(android.R.drawable.ic_lock_idle_lock)
+            .setContentTitle("Security Alert")
+            .setContentText("Unauthorized Access Detected")
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
+            .setFullScreenIntent(pendingIntent, true)
+            .setAutoCancel(true)
+            .setVibrate(longArrayOf(0, 500, 200, 500))
+            .build()
+
+        val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        nm.notify(INTRUDER_NOTIF_ID, notification)
+        
+        // Direct launch fallback - if overlay permission granted, this pops up
+        try {
+            startActivity(intent)
+        } catch (e: Exception) {
+            Log.e(TAG, "Direct startActivity failed: ${e.message}")
+        }
+    }
+
     private fun startSession() {
         updateNotification("Active 🟢")
         writeLog("═══════════════════════════════════════")
         writeLog("SESSION START: ${ts()}")
         writeLog("═══════════════════════════════════════")
         appTracker = AppUsageTracker(this) { app ->
+            Log.d(TAG, "Tracker event: $app")
             writeLog("  [APP OPENED] $app @ ${ts_time()}")
         }.also { it.start() }
         Log.d(TAG, "🟢 Session started")
@@ -141,7 +190,9 @@ class MonitoringService : Service() {
         try {
             val dir = File(filesDir, ".mmids_logs").also { if (!it.exists()) it.mkdirs() }
             File(dir, ".nomedia").also { if (!it.exists()) it.createNewFile() }
-            File(dir, "session_log.txt").appendText("$text\n")
+            val logFile = File(dir, "session_log.txt")
+            logFile.appendText("$text\n")
+            Log.d(TAG, "Log appended: $text")
         } catch (e: Exception) { Log.e(TAG, "Log write error: ${e.message}") }
     }
 
@@ -149,7 +200,7 @@ class MonitoringService : Service() {
     private fun ts_time() = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
 
     private fun buildNotification(content: String): Notification {
-        val prefs = getSharedPreferences("mmids_prefs", MODE_PRIVATE)
+        val prefs = getSharedPreferences("mmids_prefs", Context.MODE_PRIVATE)
         val appName = prefs.getString("disguise_app_name", "MMID") ?: "MMID"
         
         val mainIntent = Intent(this, com.mmids.MainActivity::class.java).apply {
@@ -181,10 +232,11 @@ class MonitoringService : Service() {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .build()
-        (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(1002, n)
+        (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(1003, n)
     }
 
     override fun onDestroy() {
+        Log.d(TAG, "MonitoringService onDestroy")
         contentResolver.unregisterContentObserver(volumeObserver)
         try { unregisterReceiver(unlockReceiver) } catch (_: Exception) {}
         super.onDestroy()

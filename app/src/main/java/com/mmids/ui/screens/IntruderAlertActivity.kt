@@ -9,12 +9,16 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -25,8 +29,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.PointerEventPass
-import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -49,7 +51,8 @@ class IntruderAlertActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // Ensure activity appears over lock screen
+        Log.d("MMIDS", "IntruderAlertActivity: onCreate")
+
         window.addFlags(
             WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
             WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
@@ -67,7 +70,7 @@ class IntruderAlertActivity : ComponentActivity() {
 
         setContent {
             MMIDSTheme {
-                BackHandler { /* Block back press */ }
+                BackHandler { /* Block back press on security screen */ }
                 when (mode) {
                     "DETERRENCE" -> DeterrenceScreen(onFinish = { finish() })
                     else -> IntruderPromptScreen(
@@ -84,6 +87,7 @@ class IntruderAlertActivity : ComponentActivity() {
         authorized = false
         holdHandler = Handler(Looper.getMainLooper())
         holdRunnable = Runnable {
+            Log.d("MMIDS", "IntruderAlertActivity: User authorized via long press")
             authorized = true
             onAuthorized()
         }
@@ -93,33 +97,40 @@ class IntruderAlertActivity : ComponentActivity() {
     private fun endHold(elapsed: Long) {
         val wasAuthorized = authorized
         holdHandler?.removeCallbacks(holdRunnable!!)
-        if (!wasAuthorized) {
+        if (!wasAuthorized && elapsed > 0) {
+            Log.d("MMIDS", "IntruderAlertActivity: Short press detected - Intruder mode triggered")
             playShutterSound()
             onIntruder()
         }
     }
 
     private fun onIntruder() {
-        startForegroundService(
-            Intent(this, MonitoringService::class.java).apply { action = "START" }
-        )
+        val svcIntent = Intent(this, MonitoringService::class.java).apply { action = "START" }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            startForegroundService(svcIntent)
+        } else {
+            startService(svcIntent)
+        }
         setContent {
             MMIDSTheme { DeterrenceScreen(onFinish = { finish() }) }
         }
     }
 
     private fun onAuthorized() {
-        // Owner authorized - stop monitoring if active
-        startForegroundService(
-            Intent(this, MonitoringService::class.java).apply { action = "STOP" }
-        )
+        val svcIntent = Intent(this, MonitoringService::class.java).apply { action = "STOP" }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            startForegroundService(svcIntent)
+        } else {
+            startService(svcIntent)
+        }
         setContent {
             MMIDSTheme {
                 AuthorizedScreen(
                     onViewLogs = {
-                        startActivity(Intent(this, MainActivity::class.java).apply {
+                        val mainIntent = Intent(this, MainActivity::class.java).apply {
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        })
+                        }
+                        startActivity(mainIntent)
                         finish()
                     },
                     onProceed = { finish() }
@@ -132,8 +143,12 @@ class IntruderAlertActivity : ComponentActivity() {
         try {
             val dpm = getSystemService(DEVICE_POLICY_SERVICE) as DevicePolicyManager
             val admin = ComponentName(this, MMIDSDeviceAdmin::class.java)
-            if (dpm.isAdminActive(admin)) dpm.lockNow()
-        } catch (_: Exception) {}
+            if (dpm.isAdminActive(admin)) {
+                dpm.lockNow()
+            }
+        } catch (e: Exception) {
+            Log.e("MMIDS", "IntruderAlertActivity: Lock failed: ${e.message}")
+        }
         finish()
     }
 
@@ -151,7 +166,9 @@ class IntruderAlertActivity : ComponentActivity() {
             }
             player?.start()
             player?.setOnCompletionListener { it.release() }
-        } catch (_: Exception) {}
+        } catch (e: Exception) {
+            Log.e("MMIDS", "IntruderAlertActivity: Audio error: ${e.message}")
+        }
     }
 }
 
@@ -163,7 +180,7 @@ fun IntruderPromptScreen(
 ) {
     var showFlash by remember { mutableStateOf(true) }
     LaunchedEffect(Unit) {
-        kotlinx.coroutines.delay(200) // Slightly longer flash
+        kotlinx.coroutines.delay(400) // 400ms flash as psychological deterrent
         showFlash = false
     }
 
@@ -229,21 +246,16 @@ fun IntruderPromptScreen(
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(Red.copy(0.85f))
                                 .pointerInput(Unit) {
-                                    awaitPointerEventScope {
-                                        while (true) {
-                                            val down = awaitPointerEvent(PointerEventPass.Main)
-                                            if (down.type == PointerEventType.Press) {
-                                                val pressTime = System.currentTimeMillis()
-                                                onOkPress()
-                                                while (true) {
-                                                    val up = awaitPointerEvent(PointerEventPass.Main)
-                                                    if (up.type == PointerEventType.Release) {
-                                                        val elapsed = System.currentTimeMillis() - pressTime
-                                                        onOkRelease(elapsed)
-                                                        break
-                                                    }
-                                                }
-                                            }
+                                    awaitEachGesture {
+                                        val down = awaitFirstDown()
+                                        val pressTime = System.currentTimeMillis()
+                                        onOkPress()
+                                        val up = waitForUpOrCancellation()
+                                        if (up != null) {
+                                            val elapsed = System.currentTimeMillis() - pressTime
+                                            onOkRelease(elapsed)
+                                        } else {
+                                            onOkRelease(0L) // Cancelled
                                         }
                                     }
                                 },

@@ -5,6 +5,7 @@ import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import kotlinx.coroutines.*
 
 class AppUsageTracker(
@@ -15,14 +16,19 @@ class AppUsageTracker(
     private var lastApp = ""
 
     fun start() {
-        if (!hasUsagePermission()) return
+        if (!hasUsagePermission()) {
+            Log.w("MMIDS", "Tracker: Missing usage permission")
+            return
+        }
+        Log.d("MMIDS", "Tracker started")
         job = CoroutineScope(Dispatchers.IO).launch {
             while (isActive) {
                 val current = getForegroundApp()
-                if (current != null && current != lastApp && current != context.packageName) {
+                if (current != null && (current != lastApp) && (current != context.packageName)) {
                     if (!isIgnoredApp(current)) {
                         lastApp = current
                         val name = getLabel(current)
+                        Log.d("MMIDS", "Tracker detected: $current ($name)")
                         withContext(Dispatchers.Main) { onAppOpened(name) }
                     }
                 }
@@ -31,12 +37,16 @@ class AppUsageTracker(
         }
     }
 
-    fun stop() { job?.cancel(); job = null; lastApp = "" }
+    fun stop() { 
+        Log.d("MMIDS", "Tracker stopped")
+        job?.cancel(); job = null; lastApp = "" 
+    }
 
     private fun getForegroundApp(): String? {
         val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         val now = System.currentTimeMillis()
-        val events = usm.queryEvents(now - 15000, now)
+        // Query last 30 seconds for events
+        val events = usm.queryEvents(now - 30000, now)
         val event = UsageEvents.Event()
         var lastPkg: String? = null
         
@@ -60,8 +70,14 @@ class AppUsageTracker(
     } catch (_: Exception) { pkg }
 
     private fun isIgnoredApp(pkg: String): Boolean {
-        val ignored = listOf("com.android.systemui", "com.android.launcher", "com.google.android.apps.nexuslauncher", "com.mmids")
-        return ignored.any { pkg.contains(it) }
+        val ignored = listOf(
+            "com.android.systemui", 
+            "com.android.launcher", 
+            "com.google.android.apps.nexuslauncher", 
+            "com.google.android.apps.pixel launcher",
+            "com.mmids"
+        )
+        return ignored.any { pkg.contains(it, ignoreCase = true) }
     }
 
     fun hasUsagePermission(): Boolean {

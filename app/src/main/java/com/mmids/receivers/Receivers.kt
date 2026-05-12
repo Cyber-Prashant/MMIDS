@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.mmids.services.MonitoringService
-import com.mmids.ui.screens.IntruderAlertActivity
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,14 +19,19 @@ class UnlockReceiver : BroadcastReceiver() {
         val isMonitoring = prefs.getBoolean("is_monitoring_active", false)
         val mode = if (isMonitoring) "DETERRENCE" else "PROMPT"
         
+        // Trigger the service to launch the intruder activity using high priority notification/FullScreenIntent
+        val svcIntent = Intent(context, MonitoringService::class.java).apply {
+            action = "LAUNCH_INTRUDER"
+            putExtra("mode", mode)
+        }
         try {
-            val alertIntent = Intent(context, IntruderAlertActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                putExtra("mode", mode)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                context.startForegroundService(svcIntent)
+            } else {
+                context.startService(svcIntent)
             }
-            context.startActivity(alertIntent)
         } catch (e: Exception) {
-            Log.e("MMIDS", "Failed to start IntruderAlertActivity: ${e.message}")
+            Log.e("MMIDS", "Failed to notify service for intruder: ${e.message}")
         }
     }
 }
@@ -59,7 +63,6 @@ class ShutdownReceiver : BroadcastReceiver() {
                 Intent(context, MonitoringService::class.java).apply { action = "SHUTDOWN" }
             )
         } catch (_: Exception) {
-            // Fallback: write directly to log
             try {
                 val dir = File(context.filesDir, ".mmids_logs").also { it.mkdirs() }
                 val ts = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())

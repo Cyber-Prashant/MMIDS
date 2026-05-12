@@ -5,10 +5,10 @@ library {
   maven_library {
     groupId: "org.jetbrains.kotlin"
     artifactId: "kotlin-stdlib"
-    version: "1.9.22"
+    version: "2.2.10"
   }
   digests {
-    sha256: "j\276\024l\'\206A8\270t\314\314\376_SN>\271#\311\232\033{]EIN\345iO>\n"
+    sha256: "\234g\314y\357\326\271![I\322\2440\217_43Ssv\307\310\216\211\275\326r\233\320\226\346\032"
   }
   repo_index {
     value: 1
@@ -57,7 +57,7 @@ library {
   maven_library {
     groupId: "org.jetbrains.kotlin"
     artifactId: "kotlin-stdlib-common"
-    version: "1.9.22"
+    version: "2.2.10"
   }
   repo_index {
     value: 1
@@ -1140,8 +1140,8 @@ library_dependencies {
 library_dependencies {
   library_index: 23
   library_dep_index: 20
-  library_dep_index: 21
   library_dep_index: 22
+  library_dep_index: 21
 }
 library_dependencies {
   library_index: 24
@@ -1608,10 +1608,10 @@ library_dependencies {
   library_dep_index: 63
   library_dep_index: 71
   library_dep_index: 77
-  library_dep_index: 31
-  library_dep_index: 58
   library_dep_index: 27
   library_dep_index: 29
+  library_dep_index: 31
+  library_dep_index: 58
   library_dep_index: 67
   library_dep_index: 64
   library_dep_index: 72
@@ -1622,10 +1622,10 @@ library_dependencies {
   library_dep_index: 51
   library_dep_index: 55
   library_dep_index: 49
-  library_dep_index: 32
-  library_dep_index: 59
   library_dep_index: 28
   library_dep_index: 30
+  library_dep_index: 32
+  library_dep_index: 59
   library_dep_index: 68
   library_dep_index: 47
   library_dep_index: 66

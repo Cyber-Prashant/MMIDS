@@ -1,12 +1,15 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.mmids"
-4    android:versionCode="1"
-5    android:versionName="1.0" >
+4    android:versionCode="2"
+5    android:versionName="1.1" >
 6
 7    <uses-sdk
+7-->INJECTED
 8        android:minSdkVersion="26"
+8-->INJECTED
 9        android:targetSdkVersion="34" />
+9-->INJECTED
 10
 11    <!-- Permissions -->
 12    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
@@ -51,486 +54,541 @@
 26    <uses-permission android:name="android.permission.BIND_DEVICE_ADMIN" />
 26-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:20:5-75
 26-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:20:22-73
-27
-28    <permission
-28-->[androidx.core:core:1.12.0] C:\Users\PC\.gradle\caches\8.13\transforms\955369e4c0c2c1e5eefeb096424c1cb7\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
-29        android:name="com.mmids.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-29-->[androidx.core:core:1.12.0] C:\Users\PC\.gradle\caches\8.13\transforms\955369e4c0c2c1e5eefeb096424c1cb7\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
-30        android:protectionLevel="signature" />
-30-->[androidx.core:core:1.12.0] C:\Users\PC\.gradle\caches\8.13\transforms\955369e4c0c2c1e5eefeb096424c1cb7\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
-31
-32    <uses-permission android:name="com.mmids.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-32-->[androidx.core:core:1.12.0] C:\Users\PC\.gradle\caches\8.13\transforms\955369e4c0c2c1e5eefeb096424c1cb7\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
-32-->[androidx.core:core:1.12.0] C:\Users\PC\.gradle\caches\8.13\transforms\955369e4c0c2c1e5eefeb096424c1cb7\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
-33
-34    <application
-34-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:22:5-202:19
-35        android:name="com.mmids.MMIDSApp"
-35-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:23:9-33
-36        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-36-->[androidx.core:core:1.12.0] C:\Users\PC\.gradle\caches\8.13\transforms\955369e4c0c2c1e5eefeb096424c1cb7\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
-37        android:enableOnBackInvokedCallback="true"
-37-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:28:9-51
-38        android:extractNativeLibs="false"
-39        android:icon="@mipmap/ic_launcher"
-39-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:25:9-43
-40        android:label="MMID"
-40-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:24:9-29
-41        android:roundIcon="@mipmap/ic_launcher_round"
-41-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:26:9-54
-42        android:theme="@style/Theme.MMIDS" >
-42-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:27:9-43
-43
-44        <!-- Main Activity — NO launcher intent -->
-45        <activity
-45-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:31:9-39:48
-46            android:name="com.mmids.MainActivity"
-46-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:32:13-41
-47            android:configChanges="orientation|screenSize|screenLayout|density|uiMode"
-47-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:38:13-87
-48            android:exported="true"
-48-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:33:13-36
-49            android:launchMode="singleTop"
-49-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:36:13-43
-50            android:resizeableActivity="true"
-50-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:39:13-46
-51            android:showWhenLocked="true"
-51-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:34:13-42
-52            android:turnScreenOn="true"
-52-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:35:13-40
-53            android:windowSoftInputMode="adjustResize" />
-53-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:37:13-55
-54
-55        <activity-alias
-55-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:119:9-128:26
-56            android:name="com.mmids.AliasFiles"
-56-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:119:25-51
-57            android:enabled="false"
-57-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:121:13-36
-58            android:exported="true"
-58-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:121:37-60
-59            android:icon="@mipmap/ic_launcher"
-59-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:122:42-76
-60            android:label="File Manager"
-60-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:122:13-41
-61            android:roundIcon="@mipmap/ic_launcher_round"
-61-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:123:9-54
-62            android:targetActivity="com.mmids.MainActivity" >
-62-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:120:13-51
-63            <intent-filter>
-63-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:47:13-50:29
-64                <action android:name="android.intent.action.MAIN" />
-64-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:17-68
-64-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:25-66
-65
-66                <category android:name="android.intent.category.LAUNCHER" />
-66-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:17-76
-66-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:27-74
-67            </intent-filter>
-68        </activity-alias>
-69        <activity-alias
-69-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:108:9-117:26
-70            android:name="com.mmids.AliasClock"
-70-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:108:25-51
-71            android:enabled="false"
-71-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:110:13-36
-72            android:exported="true"
-72-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:110:37-60
-73            android:icon="@mipmap/ic_launcher"
-73-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:111:43-77
-74            android:label="Clock Service"
-74-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:111:13-42
-75            android:roundIcon="@mipmap/ic_launcher_round"
-75-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:112:9-54
-76            android:targetActivity="com.mmids.MainActivity" >
-76-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:109:13-51
-77            <intent-filter>
-77-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:47:13-50:29
-78                <action android:name="android.intent.action.MAIN" />
-78-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:17-68
-78-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:25-66
-79
-80                <category android:name="android.intent.category.LAUNCHER" />
-80-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:17-76
-80-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:27-74
-81            </intent-filter>
-82        </activity-alias>
-83        <activity-alias
-83-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:97:9-106:26
-84            android:name="com.mmids.AliasNetwork"
-84-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:97:25-53
-85            android:enabled="false"
-85-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:99:13-36
-86            android:exported="true"
-86-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:99:37-60
-87            android:icon="@mipmap/ic_launcher"
-87-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:100:42-76
-88            android:label="Network Info"
-88-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:100:13-41
-89            android:roundIcon="@mipmap/ic_launcher_round"
-89-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:101:9-54
-90            android:targetActivity="com.mmids.MainActivity" >
-90-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:98:13-51
-91            <intent-filter>
-91-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:47:13-50:29
-92                <action android:name="android.intent.action.MAIN" />
-92-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:17-68
-92-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:25-66
-93
-94                <category android:name="android.intent.category.LAUNCHER" />
-94-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:17-76
-94-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:27-74
-95            </intent-filter>
-96        </activity-alias>
-97        <activity-alias
-97-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:86:9-95:26
-98            android:name="com.mmids.AliasBattery"
-98-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:86:25-53
-99            android:enabled="false"
-99-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:88:13-36
-100            android:exported="true"
-100-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:88:37-60
-101            android:icon="@mipmap/ic_launcher"
-101-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:89:45-79
-102            android:label="Battery Manager"
-102-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:89:13-44
-103            android:roundIcon="@mipmap/ic_launcher_round"
-103-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:90:9-54
-104            android:targetActivity="com.mmids.MainActivity" >
-104-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:87:13-51
-105            <intent-filter>
-105-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:47:13-50:29
-106                <action android:name="android.intent.action.MAIN" />
-106-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:17-68
-106-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:25-66
-107
-108                <category android:name="android.intent.category.LAUNCHER" />
-108-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:17-76
-108-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:27-74
-109            </intent-filter>
-110        </activity-alias>
-111        <activity-alias
-111-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:75:9-84:26
-112            android:name="com.mmids.AliasStats"
-112-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:75:25-51
-113            android:enabled="false"
-113-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:77:13-36
-114            android:exported="true"
-114-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:77:37-60
-115            android:icon="@mipmap/ic_launcher"
-115-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:78:41-75
-116            android:label="Usage Stats"
-116-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:78:13-40
-117            android:roundIcon="@mipmap/ic_launcher_round"
-117-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:79:9-54
-118            android:targetActivity="com.mmids.MainActivity" >
-118-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:76:13-51
-119            <intent-filter>
-119-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:47:13-50:29
-120                <action android:name="android.intent.action.MAIN" />
-120-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:17-68
-120-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:25-66
-121
-122                <category android:name="android.intent.category.LAUNCHER" />
-122-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:17-76
-122-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:27-74
-123            </intent-filter>
-124        </activity-alias>
-125        <activity-alias
-125-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:64:9-73:26
-126            android:name="com.mmids.AliasTool"
-126-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:64:25-50
-127            android:enabled="false"
-127-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:66:13-36
-128            android:exported="true"
-128-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:66:37-60
-129            android:icon="@mipmap/ic_launcher"
-129-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:67:42-76
-130            android:label="Device Tools"
-130-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:67:13-41
-131            android:roundIcon="@mipmap/ic_launcher_round"
-131-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:68:9-54
-132            android:targetActivity="com.mmids.MainActivity" >
-132-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:65:13-51
-133            <intent-filter>
-133-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:47:13-50:29
-134                <action android:name="android.intent.action.MAIN" />
-134-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:17-68
-134-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:25-66
-135
-136                <category android:name="android.intent.category.LAUNCHER" />
-136-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:17-76
-136-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:27-74
-137            </intent-filter>
-138        </activity-alias>
-139        <activity-alias
-139-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:53:9-62:26
-140            android:name="com.mmids.AliasSignal"
-140-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:53:25-52
-141            android:enabled="false"
-141-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:55:13-36
-142            android:exported="true"
-142-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:55:37-60
-143            android:icon="@mipmap/ic_launcher"
-143-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:56:44-78
-144            android:label="Signal Monitor"
-144-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:56:13-43
-145            android:roundIcon="@mipmap/ic_launcher_round"
-145-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:57:9-54
-146            android:targetActivity="com.mmids.MainActivity" >
-146-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:54:13-51
-147            <intent-filter>
-147-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:47:13-50:29
-148                <action android:name="android.intent.action.MAIN" />
-148-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:17-68
-148-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:25-66
-149
-150                <category android:name="android.intent.category.LAUNCHER" />
-150-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:17-76
-150-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:27-74
-151            </intent-filter>
-152        </activity-alias> <!-- Hidden launcher aliases — only one enabled at a time -->
-153        <activity-alias
-153-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:42:9-51:26
-154            android:name="com.mmids.AliasSettings"
-154-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:42:25-54
-155            android:enabled="true"
-155-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:44:13-35
-156            android:exported="true"
-156-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:44:36-59
-157            android:icon="@mipmap/ic_launcher"
-157-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:45:45-79
-158            android:label="System Settings"
-158-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:45:13-44
-159            android:roundIcon="@mipmap/ic_launcher_round"
-159-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:46:9-54
-160            android:targetActivity="com.mmids.MainActivity" >
-160-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:43:13-51
-161            <intent-filter>
-161-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:47:13-50:29
-162                <action android:name="android.intent.action.MAIN" />
-162-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:17-68
-162-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:25-66
-163
-164                <category android:name="android.intent.category.LAUNCHER" />
-164-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:17-76
-164-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:27-74
-165            </intent-filter>
-166        </activity-alias>
-167
-168        <!-- Intruder Alert Activity -->
-169        <activity
-169-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:131:9-138:48
-170            android:name="com.mmids.ui.screens.IntruderAlertActivity"
-170-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:132:13-61
-171            android:excludeFromRecents="true"
-171-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:138:13-46
-172            android:exported="false"
-172-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:133:13-37
-173            android:launchMode="singleInstance"
-173-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:137:13-48
-174            android:showWhenLocked="true"
-174-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:134:13-42
-175            android:theme="@style/Theme.MMIDS"
-175-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:136:13-47
-176            android:turnScreenOn="true" />
-176-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:135:13-40
-177
-178        <!-- Receivers -->
-179        <receiver
-179-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:141:9-145:20
-180            android:name="com.mmids.receivers.VolumeReceiver"
-180-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:141:19-59
-181            android:exported="false" >
-181-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:141:60-84
-182            <intent-filter>
-182-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:142:13-144:29
-183                <action android:name="android.media.VOLUME_CHANGED_ACTION" />
-183-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:143:17-77
-183-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:143:25-75
-184            </intent-filter>
-185        </receiver>
-186        <receiver
-186-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:147:9-151:20
-187            android:name="com.mmids.receivers.UnlockReceiver"
-187-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:147:19-59
-188            android:exported="false" >
-188-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:147:60-84
-189            <intent-filter>
-189-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:148:13-150:29
-190                <action android:name="android.intent.action.USER_PRESENT" />
-190-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:149:17-76
-190-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:149:25-74
-191            </intent-filter>
-192        </receiver>
-193        <receiver
-193-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:153:9-157:20
-194            android:name="com.mmids.receivers.DialerReceiver"
-194-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:153:19-59
-195            android:exported="true" >
-195-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:153:60-83
-196            <intent-filter>
-196-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:154:13-156:29
-197                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
-197-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:155:17-81
-197-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:155:25-79
-198            </intent-filter>
-199        </receiver>
-200        <receiver
-200-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:159:9-165:20
-201            android:name="com.mmids.receivers.ShutdownReceiver"
-201-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:159:19-61
-202            android:exported="true" >
-202-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:159:62-85
-203            <intent-filter android:priority="1000" >
-203-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:160:13-164:29
-203-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:160:28-51
-204                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
-204-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:161:17-79
-204-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:161:25-77
-205                <action android:name="android.intent.action.REBOOT" />
-205-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:162:17-70
-205-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:162:25-68
-206                <action android:name="android.intent.action.QUICKBOOT_POWEROFF" />
-206-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:163:17-82
-206-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:163:25-80
-207            </intent-filter>
-208        </receiver>
-209
-210        <!-- Auto-start on device boot -->
+27    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+27-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:21:5-94
+27-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:21:22-92
+28    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+28-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:22:5-118
+28-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:22:22-74
+29    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+29-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:23:5-80
+29-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:23:22-78
+30
+31    <permission
+31-->[androidx.core:core:1.12.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a570c03b9649518af8763c081b9eb101\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+32        android:name="com.mmids.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+32-->[androidx.core:core:1.12.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a570c03b9649518af8763c081b9eb101\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+33        android:protectionLevel="signature" />
+33-->[androidx.core:core:1.12.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a570c03b9649518af8763c081b9eb101\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+34
+35    <uses-permission android:name="com.mmids.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+35-->[androidx.core:core:1.12.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a570c03b9649518af8763c081b9eb101\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+35-->[androidx.core:core:1.12.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a570c03b9649518af8763c081b9eb101\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+36
+37    <application
+37-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:25:5-222:19
+38        android:name="com.mmids.MMIDSApp"
+38-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:26:9-33
+39        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+39-->[androidx.core:core:1.12.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a570c03b9649518af8763c081b9eb101\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
+40        android:enableOnBackInvokedCallback="true"
+40-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:31:9-51
+41        android:extractNativeLibs="false"
+41-->INJECTED
+42        android:icon="@mipmap/ic_launcher"
+42-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:28:9-43
+43        android:label="MMID"
+43-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:27:9-29
+44        android:roundIcon="@mipmap/ic_launcher_round"
+44-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:29:9-54
+45        android:theme="@style/Theme.MMIDS" >
+45-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:30:9-43
+46
+47        <!-- Main Activity — NO launcher intent -->
+48        <activity
+48-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:34:9-42:48
+49            android:name="com.mmids.MainActivity"
+49-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:35:13-41
+50            android:configChanges="orientation|screenSize|screenLayout|density|uiMode"
+50-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:41:13-87
+51            android:exported="true"
+51-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:36:13-36
+52            android:launchMode="singleTop"
+52-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:39:13-43
+53            android:resizeableActivity="true"
+53-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:42:13-46
+54            android:showWhenLocked="true"
+54-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:37:13-42
+55            android:turnScreenOn="true"
+55-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:38:13-40
+56            android:windowSoftInputMode="adjustResize" />
+56-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:40:13-55
+57
+58        <activity-alias
+58-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:133:9-142:26
+59            android:name="com.mmids.AliasFiles"
+59-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:133:25-51
+60            android:enabled="false"
+60-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:135:13-36
+61            android:exported="true"
+61-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:135:37-60
+62            android:icon="@mipmap/ic_launcher"
+62-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:136:42-76
+63            android:label="File Manager"
+63-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:136:13-41
+64            android:roundIcon="@mipmap/ic_launcher_round"
+64-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:137:13-58
+65            android:targetActivity="com.mmids.MainActivity" >
+65-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:134:13-51
+66            <intent-filter>
+66-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:50:13-53:29
+67                <action android:name="android.intent.action.MAIN" />
+67-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:17-68
+67-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:25-66
+68
+69                <category android:name="android.intent.category.LAUNCHER" />
+69-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:17-76
+69-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:27-74
+70            </intent-filter>
+71        </activity-alias>
+72        <activity-alias
+72-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:122:9-131:26
+73            android:name="com.mmids.AliasClock"
+73-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:122:25-51
+74            android:enabled="false"
+74-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:124:13-36
+75            android:exported="true"
+75-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:124:37-60
+76            android:icon="@mipmap/ic_launcher"
+76-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:125:43-77
+77            android:label="Clock Service"
+77-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:125:13-42
+78            android:roundIcon="@mipmap/ic_launcher_round"
+78-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:126:13-58
+79            android:targetActivity="com.mmids.MainActivity" >
+79-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:123:13-51
+80            <intent-filter>
+80-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:50:13-53:29
+81                <action android:name="android.intent.action.MAIN" />
+81-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:17-68
+81-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:25-66
+82
+83                <category android:name="android.intent.category.LAUNCHER" />
+83-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:17-76
+83-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:27-74
+84            </intent-filter>
+85        </activity-alias>
+86        <activity-alias
+86-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:111:9-120:26
+87            android:name="com.mmids.AliasNetwork"
+87-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:111:25-53
+88            android:enabled="false"
+88-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:113:13-36
+89            android:exported="true"
+89-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:113:37-60
+90            android:icon="@mipmap/ic_launcher"
+90-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:114:42-76
+91            android:label="Network Info"
+91-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:114:13-41
+92            android:roundIcon="@mipmap/ic_launcher_round"
+92-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:115:13-58
+93            android:targetActivity="com.mmids.MainActivity" >
+93-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:112:13-51
+94            <intent-filter>
+94-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:50:13-53:29
+95                <action android:name="android.intent.action.MAIN" />
+95-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:17-68
+95-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:25-66
+96
+97                <category android:name="android.intent.category.LAUNCHER" />
+97-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:17-76
+97-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:27-74
+98            </intent-filter>
+99        </activity-alias>
+100        <activity-alias
+100-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:100:9-109:26
+101            android:name="com.mmids.AliasBattery"
+101-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:100:25-53
+102            android:enabled="false"
+102-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:102:13-36
+103            android:exported="true"
+103-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:102:37-60
+104            android:icon="@mipmap/ic_launcher"
+104-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:103:45-79
+105            android:label="Battery Manager"
+105-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:103:13-44
+106            android:roundIcon="@mipmap/ic_launcher_round"
+106-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:104:13-58
+107            android:targetActivity="com.mmids.MainActivity" >
+107-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:101:13-51
+108            <intent-filter>
+108-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:50:13-53:29
+109                <action android:name="android.intent.action.MAIN" />
+109-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:17-68
+109-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:25-66
+110
+111                <category android:name="android.intent.category.LAUNCHER" />
+111-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:17-76
+111-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:27-74
+112            </intent-filter>
+113        </activity-alias>
+114        <activity-alias
+114-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:89:9-98:26
+115            android:name="com.mmids.AliasStats"
+115-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:89:25-51
+116            android:enabled="false"
+116-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:91:13-36
+117            android:exported="true"
+117-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:91:37-60
+118            android:icon="@mipmap/ic_launcher"
+118-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:92:41-75
+119            android:label="Usage Stats"
+119-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:92:13-40
+120            android:roundIcon="@mipmap/ic_launcher_round"
+120-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:93:13-58
+121            android:targetActivity="com.mmids.MainActivity" >
+121-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:90:13-51
+122            <intent-filter>
+122-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:50:13-53:29
+123                <action android:name="android.intent.action.MAIN" />
+123-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:17-68
+123-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:25-66
+124
+125                <category android:name="android.intent.category.LAUNCHER" />
+125-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:17-76
+125-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:27-74
+126            </intent-filter>
+127        </activity-alias>
+128        <activity-alias
+128-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:78:9-87:26
+129            android:name="com.mmids.AliasTool"
+129-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:78:25-50
+130            android:enabled="false"
+130-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:80:13-36
+131            android:exported="true"
+131-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:80:37-60
+132            android:icon="@mipmap/ic_launcher"
+132-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:81:42-76
+133            android:label="Device Tools"
+133-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:81:13-41
+134            android:roundIcon="@mipmap/ic_launcher_round"
+134-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:82:13-58
+135            android:targetActivity="com.mmids.MainActivity" >
+135-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:79:13-51
+136            <intent-filter>
+136-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:50:13-53:29
+137                <action android:name="android.intent.action.MAIN" />
+137-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:17-68
+137-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:25-66
+138
+139                <category android:name="android.intent.category.LAUNCHER" />
+139-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:17-76
+139-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:27-74
+140            </intent-filter>
+141        </activity-alias>
+142        <activity-alias
+142-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:67:9-76:26
+143            android:name="com.mmids.AliasSignal"
+143-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:67:25-52
+144            android:enabled="false"
+144-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:69:13-36
+145            android:exported="true"
+145-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:69:37-60
+146            android:icon="@mipmap/ic_launcher"
+146-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:70:44-78
+147            android:label="Signal Monitor"
+147-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:70:13-43
+148            android:roundIcon="@mipmap/ic_launcher_round"
+148-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:71:13-58
+149            android:targetActivity="com.mmids.MainActivity" >
+149-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:68:13-51
+150            <intent-filter>
+150-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:50:13-53:29
+151                <action android:name="android.intent.action.MAIN" />
+151-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:17-68
+151-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:25-66
+152
+153                <category android:name="android.intent.category.LAUNCHER" />
+153-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:17-76
+153-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:27-74
+154            </intent-filter>
+155        </activity-alias>
+156        <activity-alias
+156-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:56:9-65:26
+157            android:name="com.mmids.AliasSettings"
+157-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:56:25-54
+158            android:enabled="false"
+158-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:58:13-36
+159            android:exported="true"
+159-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:58:37-60
+160            android:icon="@mipmap/ic_launcher"
+160-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:59:45-79
+161            android:label="System Settings"
+161-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:59:13-44
+162            android:roundIcon="@mipmap/ic_launcher_round"
+162-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:60:13-58
+163            android:targetActivity="com.mmids.MainActivity" >
+163-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:57:13-51
+164            <intent-filter>
+164-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:50:13-53:29
+165                <action android:name="android.intent.action.MAIN" />
+165-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:17-68
+165-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:25-66
+166
+167                <category android:name="android.intent.category.LAUNCHER" />
+167-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:17-76
+167-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:27-74
+168            </intent-filter>
+169        </activity-alias> <!-- Hidden launcher aliases — only one enabled at a time -->
+170        <activity-alias
+170-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:45:9-54:26
+171            android:name="com.mmids.AliasMMID"
+171-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:45:25-50
+172            android:enabled="true"
+172-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:47:13-35
+173            android:exported="true"
+173-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:47:36-59
+174            android:icon="@mipmap/ic_launcher"
+174-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:34-68
+175            android:label="MMID"
+175-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:48:13-33
+176            android:roundIcon="@mipmap/ic_launcher_round"
+176-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:49:13-58
+177            android:targetActivity="com.mmids.MainActivity" >
+177-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:46:13-51
+178            <intent-filter>
+178-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:50:13-53:29
+179                <action android:name="android.intent.action.MAIN" />
+179-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:17-68
+179-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:51:25-66
+180
+181                <category android:name="android.intent.category.LAUNCHER" />
+181-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:17-76
+181-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:52:27-74
+182            </intent-filter>
+183        </activity-alias>
+184
+185        <!-- Intruder Alert Activity -->
+186        <activity
+186-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:145:9-153:51
+187            android:name="com.mmids.ui.screens.IntruderAlertActivity"
+187-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:146:13-61
+188            android:excludeFromRecents="true"
+188-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:152:13-46
+189            android:exported="false"
+189-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:147:13-37
+190            android:launchMode="singleInstance"
+190-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:151:13-48
+191            android:screenOrientation="portrait"
+191-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:153:13-49
+192            android:showWhenLocked="true"
+192-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:148:13-42
+193            android:theme="@style/Theme.MMIDS"
+193-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:150:13-47
+194            android:turnScreenOn="true" />
+194-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:149:13-40
+195
+196        <!-- Receivers -->
+197        <receiver
+197-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:156:9-160:20
+198            android:name="com.mmids.receivers.VolumeReceiver"
+198-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:156:19-59
+199            android:exported="false" >
+199-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:156:60-84
+200            <intent-filter>
+200-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:157:13-159:29
+201                <action android:name="android.media.VOLUME_CHANGED_ACTION" />
+201-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:158:17-77
+201-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:158:25-75
+202            </intent-filter>
+203        </receiver>
+204        <receiver
+204-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:162:9-166:20
+205            android:name="com.mmids.receivers.UnlockReceiver"
+205-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:162:19-59
+206            android:exported="false" >
+206-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:162:60-84
+207            <intent-filter>
+207-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:163:13-165:29
+208                <action android:name="android.intent.action.USER_PRESENT" />
+208-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:164:17-76
+208-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:164:25-74
+209            </intent-filter>
+210        </receiver>
 211        <receiver
-211-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:168:9-181:20
-212            android:name="com.mmids.receivers.BootReceiver"
-212-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:169:13-51
-213            android:directBootAware="true"
-213-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:172:13-43
-214            android:enabled="true"
-214-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:171:13-35
-215            android:exported="true"
-215-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:170:13-36
-216            android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
-216-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:173:13-75
-217            <intent-filter android:priority="1000" >
-217-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:174:13-180:29
-217-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:174:28-51
-218                <action android:name="android.intent.action.BOOT_COMPLETED" />
-218-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:175:17-78
-218-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:175:25-76
-219                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
-219-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:176:17-85
-219-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:176:25-83
-220                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-220-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:177:17-81
-220-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:177:25-79
-221                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
-221-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:178:17-81
-221-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:178:25-79
-222
-223                <category android:name="android.intent.category.DEFAULT" />
-223-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:179:17-75
-223-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:179:27-73
-224            </intent-filter>
-225        </receiver>
-226        <receiver
-226-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:183:9-194:20
-227            android:name="com.mmids.admin.MMIDSDeviceAdmin"
-227-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:184:13-51
-228            android:exported="true"
-228-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:185:13-36
-229            android:label="System Service Admin"
-229-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:186:13-49
-230            android:permission="android.permission.BIND_DEVICE_ADMIN" >
-230-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:187:13-70
-231            <meta-data
-231-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:188:13-190:64
-232                android:name="android.app.device_admin"
-232-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:189:17-56
-233                android:resource="@xml/device_admin_policies" />
-233-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:190:17-62
+211-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:168:9-176:20
+212            android:name="com.mmids.receivers.DialerReceiver"
+212-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:168:19-59
+213            android:exported="true" >
+213-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:168:60-83
+214            <intent-filter android:priority="1000" >
+214-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:169:13-171:29
+214-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:169:28-51
+215                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+215-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:170:17-81
+215-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:170:25-79
+216            </intent-filter>
+217            <intent-filter>
+217-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:172:13-175:29
+218                <action android:name="android.provider.Telephony.SECRET_CODE" />
+218-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:173:17-81
+218-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:173:25-78
+219
+220                <data
+220-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:174:17-83
+221                    android:host="66437"
+221-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:174:60-80
+222                    android:scheme="android_secret_code" />
+222-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:174:23-59
+223            </intent-filter>
+224        </receiver>
+225        <receiver
+225-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:178:9-184:20
+226            android:name="com.mmids.receivers.ShutdownReceiver"
+226-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:178:19-61
+227            android:exported="true" >
+227-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:178:62-85
+228            <intent-filter android:priority="1000" >
+228-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:179:13-183:29
+228-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:179:28-51
+229                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+229-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:180:17-79
+229-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:180:25-77
+230                <action android:name="android.intent.action.REBOOT" />
+230-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:181:17-70
+230-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:181:25-68
+231                <action android:name="android.intent.action.QUICKBOOT_POWEROFF" />
+231-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:182:17-82
+231-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:182:25-80
+232            </intent-filter>
+233        </receiver>
 234
-235            <intent-filter>
-235-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:191:13-193:29
-236                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
-236-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:192:17-81
-236-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:192:25-79
-237            </intent-filter>
-238        </receiver>
-239
-240        <!-- Foreground Service -->
-241        <service
-241-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:197:9-200:39
-242            android:name="com.mmids.services.MonitoringService"
-242-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:198:13-55
-243            android:exported="false"
-243-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:200:13-37
-244            android:foregroundServiceType="dataSync" />
-244-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:199:13-53
-245
-246        <provider
-246-->[androidx.emoji2:emoji2:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\0b874d0fa80cd790be494b709e478b21\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
-247            android:name="androidx.startup.InitializationProvider"
-247-->[androidx.emoji2:emoji2:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\0b874d0fa80cd790be494b709e478b21\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:25:13-67
-248            android:authorities="com.mmids.androidx-startup"
-248-->[androidx.emoji2:emoji2:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\0b874d0fa80cd790be494b709e478b21\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:26:13-68
-249            android:exported="false" >
-249-->[androidx.emoji2:emoji2:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\0b874d0fa80cd790be494b709e478b21\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:27:13-37
-250            <meta-data
-250-->[androidx.emoji2:emoji2:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\0b874d0fa80cd790be494b709e478b21\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
-251                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-251-->[androidx.emoji2:emoji2:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\0b874d0fa80cd790be494b709e478b21\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:30:17-75
-252                android:value="androidx.startup" />
-252-->[androidx.emoji2:emoji2:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\0b874d0fa80cd790be494b709e478b21\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:31:17-49
-253            <meta-data
-253-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\PC\.gradle\caches\8.13\transforms\6f0a0fdb950e1ff3217c5ccac1837c52\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
-254                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-254-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\PC\.gradle\caches\8.13\transforms\6f0a0fdb950e1ff3217c5ccac1837c52\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
-255                android:value="androidx.startup" />
-255-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\PC\.gradle\caches\8.13\transforms\6f0a0fdb950e1ff3217c5ccac1837c52\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+235        <!-- Auto-start on device boot -->
+236        <receiver
+236-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:187:9-200:20
+237            android:name="com.mmids.receivers.BootReceiver"
+237-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:188:13-51
+238            android:directBootAware="true"
+238-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:191:13-43
+239            android:enabled="true"
+239-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:190:13-35
+240            android:exported="true"
+240-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:189:13-36
+241            android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
+241-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:192:13-75
+242            <intent-filter android:priority="1000" >
+242-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:193:13-199:29
+242-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:193:28-51
+243                <action android:name="android.intent.action.BOOT_COMPLETED" />
+243-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:194:17-78
+243-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:194:25-76
+244                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+244-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:195:17-85
+244-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:195:25-83
+245                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+245-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:196:17-81
+245-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:196:25-79
+246                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+246-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:197:17-81
+246-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:197:25-79
+247
+248                <category android:name="android.intent.category.DEFAULT" />
+248-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:198:17-75
+248-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:198:27-73
+249            </intent-filter>
+250        </receiver>
+251        <receiver
+251-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:202:9-213:20
+252            android:name="com.mmids.admin.MMIDSDeviceAdmin"
+252-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:203:13-51
+253            android:exported="true"
+253-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:204:13-36
+254            android:label="System Service Admin"
+254-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:205:13-49
+255            android:permission="android.permission.BIND_DEVICE_ADMIN" >
+255-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:206:13-70
 256            <meta-data
-256-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
-257                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-257-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
-258                android:value="androidx.startup" />
-258-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
-259        </provider>
-260
-261        <receiver
-261-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
-262            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-262-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
-263            android:directBootAware="false"
-263-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
-264            android:enabled="true"
-264-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
-265            android:exported="true"
-265-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
-266            android:permission="android.permission.DUMP" >
-266-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
-267            <intent-filter>
-267-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
-268                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-268-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
-268-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
-269            </intent-filter>
-270            <intent-filter>
-270-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
-271                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-271-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
-271-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
-272            </intent-filter>
-273            <intent-filter>
-273-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
-274                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-274-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
-274-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
-275            </intent-filter>
-276            <intent-filter>
-276-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
-277                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-277-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
-277-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\8.13\transforms\d142a9829bba6e0c51543a7a90ac3b35\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
-278            </intent-filter>
-279        </receiver>
-280    </application>
-281
-282</manifest>
+256-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:207:13-209:64
+257                android:name="android.app.device_admin"
+257-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:208:17-56
+258                android:resource="@xml/device_admin_policies" />
+258-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:209:17-62
+259
+260            <intent-filter>
+260-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:210:13-212:29
+261                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+261-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:211:17-81
+261-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:211:25-79
+262            </intent-filter>
+263        </receiver>
+264
+265        <!-- Foreground Service -->
+266        <service
+266-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:216:9-220:43
+267            android:name="com.mmids.services.MonitoringService"
+267-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:217:13-55
+268            android:exported="false"
+268-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:219:13-37
+269            android:foregroundServiceType="dataSync"
+269-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:218:13-53
+270            android:stopWithTask="false" />
+270-->C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\AndroidManifest.xml:220:13-41
+271
+272        <provider
+272-->[androidx.emoji2:emoji2:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\d28f60d6b227a4198fc15200c3677a23\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+273            android:name="androidx.startup.InitializationProvider"
+273-->[androidx.emoji2:emoji2:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\d28f60d6b227a4198fc15200c3677a23\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
+274            android:authorities="com.mmids.androidx-startup"
+274-->[androidx.emoji2:emoji2:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\d28f60d6b227a4198fc15200c3677a23\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+275            android:exported="false" >
+275-->[androidx.emoji2:emoji2:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\d28f60d6b227a4198fc15200c3677a23\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+276            <meta-data
+276-->[androidx.emoji2:emoji2:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\d28f60d6b227a4198fc15200c3677a23\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+277                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+277-->[androidx.emoji2:emoji2:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\d28f60d6b227a4198fc15200c3677a23\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+278                android:value="androidx.startup" />
+278-->[androidx.emoji2:emoji2:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\d28f60d6b227a4198fc15200c3677a23\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+279            <meta-data
+279-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\2c3c8b3deed68f7eeade1b561b43291f\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+280                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+280-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\2c3c8b3deed68f7eeade1b561b43291f\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+281                android:value="androidx.startup" />
+281-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\2c3c8b3deed68f7eeade1b561b43291f\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+282            <meta-data
+282-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
+283                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+283-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+284                android:value="androidx.startup" />
+284-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
+285        </provider>
+286
+287        <receiver
+287-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
+288            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+288-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
+289            android:directBootAware="false"
+289-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
+290            android:enabled="true"
+290-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
+291            android:exported="true"
+291-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
+292            android:permission="android.permission.DUMP" >
+292-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
+293            <intent-filter>
+293-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
+294                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+294-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
+294-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
+295            </intent-filter>
+296            <intent-filter>
+296-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
+297                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+297-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
+297-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
+298            </intent-filter>
+299            <intent-filter>
+299-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
+300                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+300-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
+300-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+301            </intent-filter>
+302            <intent-filter>
+302-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
+303                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+303-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
+303-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\PC\.gradle\caches\9.4.1\transforms\a66f8d3913a5d3cd8d17946c7e262101\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+304            </intent-filter>
+305        </receiver>
+306    </application>
+307
+308</manifest>

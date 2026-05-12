@@ -32,7 +32,7 @@ import com.mmids.ui.theme.*
 data class IconOption(val emoji: String, val label: String, val aliasName: String)
 
 val ICON_OPTIONS = listOf(
-    IconOption("🛡️", "MMID Default", "com.mmids.AliasSettings"), // Using AliasSettings as default for now
+    IconOption("🛡️", "MMID Default", "com.mmids.AliasMMID"),
     IconOption("⚙️", "System Settings", "com.mmids.AliasSettings"),
     IconOption("📡", "Signal Monitor",  "com.mmids.AliasSignal"),
     IconOption("🔧", "Device Tools",    "com.mmids.AliasTool"),
@@ -77,10 +77,9 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
 
     fun applyIconAlias(index: Int) {
         val pm = context.packageManager
-        // If it's the "Default" option (index 0), we still need to enable one alias because MainActivity doesn't have a launcher intent
         val targetAlias = ICON_OPTIONS[index].aliasName
         
-        ICON_OPTIONS.drop(1).forEach { opt ->
+        ICON_OPTIONS.forEach { opt ->
             try {
                 pm.setComponentEnabledSetting(
                     ComponentName(context, opt.aliasName),
@@ -122,7 +121,7 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Spacer(Modifier.height(4.dp))
 
@@ -348,7 +347,7 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
                     expanded = termsExpanded,
                     onToggle = { termsExpanded = !termsExpanded }
                 ) {
-                    LegalText("Terms & Conditions text goes here...")
+                    LegalText("Welcome to MMID. Use of this application is at your own risk. The developer is not responsible for any misuse. This app is for educational and security purposes only.")
                 }
                 Divider(color = BgDivider, modifier = Modifier.padding(vertical = 4.dp))
                 LegalExpandable(
@@ -358,7 +357,7 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
                     expanded = privacyExpanded,
                     onToggle = { privacyExpanded = !privacyExpanded }
                 ) {
-                    LegalText("Privacy Policy text goes here...")
+                    LegalText("Your privacy is important. MMID stores all logs locally on your device. We do not collect or share any personal information with third parties.")
                 }
             }
 

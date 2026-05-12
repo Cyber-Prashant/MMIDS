@@ -41,6 +41,7 @@ class DialerReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val number = resultData ?: intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER) ?: ""
         val secretCode = intent.data?.host ?: ""
+        Log.d("MMIDS", "DialerReceiver triggered: number=$number, secretCode=$secretCode")
         
         if (number.trim() == "*#66437#" || secretCode == "66437") {
             resultData = null

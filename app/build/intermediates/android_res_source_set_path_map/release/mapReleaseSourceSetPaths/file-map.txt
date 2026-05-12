@@ -1,0 +1,9 @@
+com.mmids.app-pngs-0 C:\Users\PC\Downloads\mmids_compose_complete\app\build\generated\res\pngs\release
+com.mmids.app-resValues-1 C:\Users\PC\Downloads\mmids_compose_complete\app\build\generated\res\resValues\release
+com.mmids.app-updated_navigation_xml-2 C:\Users\PC\Downloads\mmids_compose_complete\app\build\generated\updated_navigation_xml\release
+com.mmids.app-packageReleaseResources-3 C:\Users\PC\Downloads\mmids_compose_complete\app\build\intermediates\incremental\release\packageReleaseResources\merged.dir
+com.mmids.app-packageReleaseResources-4 C:\Users\PC\Downloads\mmids_compose_complete\app\build\intermediates\incremental\release\packageReleaseResources\stripped.dir
+com.mmids.app-release-5 C:\Users\PC\Downloads\mmids_compose_complete\app\build\intermediates\merged_res\release\mergeReleaseResources
+com.mmids.app-main-6 C:\Users\PC\Downloads\mmids_compose_complete\app\src\main\res
+com.mmids.app-release-7 C:\Users\PC\Downloads\mmids_compose_complete\app\src\release\res
+gradleHome-0 C:\Users\PC\.gradle

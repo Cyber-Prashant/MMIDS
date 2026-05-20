@@ -347,7 +347,21 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
                     expanded = termsExpanded,
                     onToggle = { termsExpanded = !termsExpanded }
                 ) {
-                    LegalText("Welcome to MMID. Use of this application is at your own risk. The developer is not responsible for any misuse. This app is for educational and security purposes only.")
+                    LegalText("""
+Welcome to MMID (Manual Mobile Intrusion Detection System). By using this application, you agree to the following terms:
+
+1. Use of the Application: This app is intended for personal security and educational purposes only. You must be the legal owner of the device on which it is installed.
+
+2. User Responsibility: You are solely responsible for how you use this tool. The developer shall not be held liable for any misuse, illegal activity, or unauthorized surveillance performed using this app.
+
+3. Monitoring Features: By enabling monitoring, you acknowledge that the app will track application foreground events and device interactions locally on the device.
+
+4. Data Privacy: All session logs are stored internally and are not transmitted to any external server. You are responsible for securing the access code to this application.
+
+5. Disclaimer: This software is provided "as is" without warranty of any kind. The developer does not guarantee 100% detection of all intrusion attempts.
+
+By clicking "I Agree" or continuing to use this app, you accept these terms in full.
+                    """.trimIndent())
                 }
                 Divider(color = BgDivider, modifier = Modifier.padding(vertical = 4.dp))
                 LegalExpandable(
@@ -357,8 +371,50 @@ fun SettingsScreen(onBack: () -> Unit, activity: MainActivity) {
                     expanded = privacyExpanded,
                     onToggle = { privacyExpanded = !privacyExpanded }
                 ) {
-                    LegalText("Your privacy is important. MMID stores all logs locally on your device. We do not collect or share any personal information with third parties.")
+                    LegalText("""
+At MMID, your privacy is our top priority.
+
+1. Local Data Storage: All data collected (app names, timestamps, session events) is stored exclusively in your device's internal private storage.
+
+2. No External Transmission: This application does not have internet access permissions. It cannot and does not upload your logs to any cloud service, database, or third party.
+
+3. Log Security: Logs are stored in a hidden directory with a .nomedia file to prevent them from appearing in gallery or file manager apps.
+
+4. Permissions: We request Usage Access and Device Admin permissions strictly for functionality (detecting app opens and preventing unauthorized uninstallation).
+
+5. User Control: You can clear all logs or uninstall the application at any time through the Settings menu. Uninstalling the app will permanently delete all stored activity data.
+                    """.trimIndent())
                 }
+            }
+
+            // ── Contact ───────────────────────────────────────────
+            SectionLabel("📬 CONTACT & SUPPORT")
+            MMIDSCard {
+                ContactRow(
+                    icon = Icons.Outlined.Send,
+                    platform = "Telegram",
+                    handle = "@PrashantCyberCore",
+                    color = Color(0xFF2196F3),
+                    onClick = {
+                        try {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/PrashantCyberCore"))
+                            context.startActivity(intent)
+                        } catch (_: Exception) {}
+                    }
+                )
+                Divider(color = BgDivider)
+                ContactRow(
+                    icon = Icons.Outlined.Email,
+                    platform = "Email",
+                    handle = "cybercore.support@rediffmail.com",
+                    color = Color(0xFFFF5722),
+                    onClick = {
+                        try {
+                            val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:cybercore.support@rediffmail.com"))
+                            context.startActivity(intent)
+                        } catch (_: Exception) {}
+                    }
+                )
             }
 
             // ── Danger Zone ───────────────────────────────────────
@@ -488,4 +544,39 @@ fun LegalText(text: String) {
         )
     }
     Spacer(Modifier.height(8.dp))
+}
+
+@Composable
+fun ContactRow(
+    icon: ImageVector,
+    platform: String,
+    handle: String,
+    color: Color,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .size(36.dp)
+                .clip(CircleShape)
+                .background(color.copy(0.15f)),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(icon, contentDescription = null, tint = color, modifier = Modifier.size(18.dp))
+        }
+        Column(modifier = Modifier.weight(1f)) {
+            Text(platform, color = TextPrimary, fontSize = 13.sp, fontWeight = FontWeight.Medium)
+            Text(handle, color = color, fontSize = 11.sp, maxLines = 1,
+                overflow = TextOverflow.Ellipsis)
+        }
+        Icon(Icons.Outlined.OpenInNew, contentDescription = null,
+            tint = TextDim, modifier = Modifier.size(16.dp))
+    }
 }

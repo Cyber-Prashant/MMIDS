@@ -32,6 +32,11 @@ fun MMIDSNavHost(activity: MainActivity) {
             ConsentScreen(
                 onAgree = {
                     prefs.edit().putBoolean("user_consented", true).apply()
+                    // Set default disguise to "MMID Default" alias (index 0)
+                    prefs.edit().putInt("disguise_icon_index", 0).apply()
+                    activity.applyDisguise()
+                    activity.requestBatteryExemption()
+                    activity.startStandbyService()
                     navController.navigate(Screen.Dashboard.route) {
                         popUpTo(Screen.Consent.route) { inclusive = true }
                     }

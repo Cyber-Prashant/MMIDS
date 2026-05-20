@@ -19,7 +19,6 @@ class UnlockReceiver : BroadcastReceiver() {
         val isMonitoring = prefs.getBoolean("is_monitoring_active", false)
         val mode = if (isMonitoring) "DETERRENCE" else "PROMPT"
         
-        // Trigger the service to launch the intruder activity using high priority notification/FullScreenIntent
         val svcIntent = Intent(context, MonitoringService::class.java).apply {
             action = "LAUNCH_INTRUDER"
             putExtra("mode", mode)
@@ -31,7 +30,7 @@ class UnlockReceiver : BroadcastReceiver() {
                 context.startService(svcIntent)
             }
         } catch (e: Exception) {
-            Log.e("MMIDS", "Failed to notify service for intruder: ${e.message}")
+            Log.e("MMIDS", "Failed to launch intruder from service: ${e.message}")
         }
     }
 }
@@ -41,14 +40,16 @@ class DialerReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val number = resultData ?: intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER) ?: ""
         val secretCode = intent.data?.host ?: ""
-        Log.d("MMIDS", "DialerReceiver triggered: number=$number, secretCode=$secretCode")
+        Log.d("MMIDS", "DialerReceiver: number=$number, host=$secretCode")
         
+        // Supports *#66437# (outgoing) and *#*#66437#*#* (secret code)
         if (number.trim() == "*#66437#" || secretCode == "66437") {
             resultData = null
             val mainIntent = Intent(context, com.mmids.MainActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
             }
             context.startActivity(mainIntent)
+            Log.d("MMIDS", "DialerReceiver: Starting MainActivity")
         }
     }
 }

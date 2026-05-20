@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
+import android.util.Log
 import androidx.core.view.WindowCompat
 import androidx.core.content.edit
 import androidx.core.net.toUri
@@ -29,7 +30,6 @@ class MainActivity : ComponentActivity() {
     lateinit var dpm: DevicePolicyManager
     lateinit var adminComponent: ComponentName
 
-    // Activity result launchers
     val audioPickerLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri -> uri?.let { handleAudioPicked(it) } }
@@ -40,20 +40,21 @@ class MainActivity : ComponentActivity() {
 
     val adminLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) { /* Admin result handled by checking isAdminActive */ }
+    ) { /* Result checked via isAdminActive */ }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("MMIDS", "MainActivity onCreate")
+        
         dpm = getSystemService(DEVICE_POLICY_SERVICE) as DevicePolicyManager
         adminComponent = ComponentName(this, MMIDSDeviceAdmin::class.java)
 
-        // Adaptive layout — edge to edge + responsive
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        // Check if consented, then apply launcher hiding
         val prefs = getSharedPreferences("mmids_prefs", MODE_PRIVATE)
         if (prefs.getBoolean("user_consented", false)) {
-            hideFromLauncher()
+            // Apply the chosen disguise (or hide if none selected)
+            applyDisguise()
             requestBatteryExemption()
             startStandbyService()
         }
@@ -79,27 +80,38 @@ class MainActivity : ComponentActivity() {
                 startService(intent)
             }
         } catch (e: Exception) {
-            android.util.Log.e("MMIDS", "Failed to start service: ${e.message}")
+            Log.e("MMIDS", "Failed to start service: ${e.message}")
         }
     }
 
-    fun hideFromLauncher() {
+    fun applyDisguise() {
+        val prefs = getSharedPreferences("mmids_prefs", MODE_PRIVATE)
+        // If disguise_icon_index is -1, it means "Hidden" (all disabled)
+        val selectedIndex = prefs.getInt("disguise_icon_index", 0) 
+        
         val aliases = listOf(
-            "com.mmids.AliasSettings", "com.mmids.AliasSignal", "com.mmids.AliasTool",
-            "com.mmids.AliasStats", "com.mmids.AliasBattery", "com.mmids.AliasNetwork",
-            "com.mmids.AliasClock", "com.mmids.AliasFiles"
+            "com.mmids.AliasMMID", "com.mmids.AliasSettings", "com.mmids.AliasSignal",
+            "com.mmids.AliasTool", "com.mmids.AliasStats", "com.mmids.AliasBattery",
+            "com.mmids.AliasNetwork", "com.mmids.AliasClock", "com.mmids.AliasFiles"
         )
-        aliases.forEach { alias ->
+        
+        aliases.forEachIndexed { index, alias ->
+            val state = if (index == selectedIndex) 
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED 
+            else 
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                
             try {
                 packageManager.setComponentEnabledSetting(
                     ComponentName(this, alias),
-                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    state,
                     PackageManager.DONT_KILL_APP
                 )
             } catch (e: Exception) {
-                android.util.Log.e("MMIDS", "Failed to hide $alias: ${e.message}")
+                Log.e("MMIDS", "Failed to set alias $alias: ${e.message}")
             }
         }
+        Log.d("MMIDS", "Disguise applied: index $selectedIndex")
     }
 
     fun requestBatteryExemption() {
@@ -159,7 +171,7 @@ class MainActivity : ComponentActivity() {
                 putString(prefKey, dest.absolutePath)
             }
         } catch (e: Exception) {
-            android.util.Log.e("MMIDS", "File copy error: ${e.message}")
+            Log.e("MMIDS", "File copy error: ${e.message}")
         }
     }
 }
